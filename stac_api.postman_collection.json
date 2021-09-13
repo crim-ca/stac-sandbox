@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "22254e3d-3ed6-439d-ad4a-23bbd754ea9d",
+		"name": "STAC API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Basic Collection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"test-collection\",\n  \"stac_extensions\": [],\n  \"type\": \"Collection\",\n  \"description\": \"Landat 8 imagery radiometrically calibrated and orthorectified using gound points and Digital Elevation Model (DEM) data to correct relief displacement.\",\n  \"stac_version\": \"1.0.0\",\n  \"license\": \"PDDL-1.0\",\n  \"summaries\": {\n    \"platform\": [\"landsat-8\"],\n    \"instruments\": [\"oli\", \"tirs\"],\n    \"gsd\": [30],\n    \"eo:bands\": [\n      {\n        \"name\": \"B1\",\n        \"common_name\": \"coastal\",\n        \"center_wavelength\": 0.44,\n        \"full_width_half_max\": 0.02\n      },\n      {\n        \"name\": \"B2\",\n        \"common_name\": \"blue\",\n        \"center_wavelength\": 0.48,\n        \"full_width_half_max\": 0.06\n      },\n      {\n        \"name\": \"B3\",\n        \"common_name\": \"green\",\n        \"center_wavelength\": 0.56,\n        \"full_width_half_max\": 0.06\n      },\n      {\n        \"name\": \"B4\",\n        \"common_name\": \"red\",\n        \"center_wavelength\": 0.65,\n        \"full_width_half_max\": 0.04\n      },\n      {\n        \"name\": \"B5\",\n        \"common_name\": \"nir\",\n        \"center_wavelength\": 0.86,\n        \"full_width_half_max\": 0.03\n      },\n      {\n        \"name\": \"B6\",\n        \"common_name\": \"swir16\",\n        \"center_wavelength\": 1.6,\n        \"full_width_half_max\": 0.08\n      },\n      {\n        \"name\": \"B7\",\n        \"common_name\": \"swir22\",\n        \"center_wavelength\": 2.2,\n        \"full_width_half_max\": 0.2\n      },\n      {\n        \"name\": \"B8\",\n        \"common_name\": \"pan\",\n        \"center_wavelength\": 0.59,\n        \"full_width_half_max\": 0.18\n      },\n      {\n        \"name\": \"B9\",\n        \"common_name\": \"cirrus\",\n        \"center_wavelength\": 1.37,\n        \"full_width_half_max\": 0.02\n      },\n      {\n        \"name\": \"B10\",\n        \"common_name\": \"lwir11\",\n        \"center_wavelength\": 10.9,\n        \"full_width_half_max\": 0.8\n      },\n      {\n        \"name\": \"B11\",\n        \"common_name\": \"lwir12\",\n        \"center_wavelength\": 12,\n        \"full_width_half_max\": 1\n      }\n    ]\n  },\n  \"extent\": {\n    \"spatial\": {\n      \"bbox\": [\n        [\n          -180.0,\n          -90.0,\n          180.0,\n          90.0\n        ]\n      ]\n    },\n    \"temporal\": {\n      \"interval\": [\n        [\n          \"2013-06-01\",\n          null\n        ]\n      ]\n    }\n  },\n  \"links\": [\n    {\n      \"href\": \"http://localhost:8081/collections/landsat-8-l1\",\n      \"rel\": \"self\",\n      \"type\": \"application/json\"\n    },\n    {\n      \"href\": \"http://localhost:8081/\",\n      \"rel\": \"parent\",\n      \"type\": \"application/json\"\n    },\n    {\n      \"href\": \"http://localhost:8081/collections/landsat-8-l1/items\",\n      \"rel\": \"item\",\n      \"type\": \"application/geo+json\"\n    },\n    {\n      \"href\": \"http://localhost:8081/\",\n      \"rel\": \"root\",\n      \"type\": \"application/json\"\n    }\n  ],\n  \"title\": \"Landsat 8 L1\",\n  \"keywords\": [\n    \"landsat\",\n    \"earth observation\",\n    \"usgs\"\n  ],\n  \"providers\": [\n    {\n      \"name\": \"USGS\",\n      \"roles\": [\n        \"producer\"\n      ],\n      \"url\": \"https://landsat.usgs.gov/\"\n    },\n    {\n      \"name\": \"Planet Labs\",\n      \"roles\": [\n        \"processor\"\n      ],\n      \"url\": \"https://github.com/landsat-pds/landsat_ingestor\"\n    },\n    {\n      \"name\": \"AWS\",\n      \"roles\": [\n        \"host\"\n      ],\n      \"url\": \"https://landsatonaws.com/\"\n    },\n    {\n      \"name\": \"Development Seed\",\n      \"roles\": [\n        \"processor\"\n      ],\n      \"url\": \"https://github.com/sat-utils/sat-api\"\n    },\n    {\n      \"name\": \"Earth Search by Element84\",\n      \"description\": \"API of Earth on AWS datasets\",\n      \"roles\": [\n        \"host\"\n      ],\n      \"url\": \"https://element84.com\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/collections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Basic Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"Feature\",\n    \"id\": \"test-item9\",\n    \"stac_version\": \"1.0.0\",\n    \"stac_extensions\": [\n      \"https://stac-extensions.github.io/eo/v1.0.0/schema.json\",\n      \"https://stac-extensions.github.io/projection/v1.0.0/schema.json\"\n    ],\n    \"geometry\": {\n      \"coordinates\": [\n        [\n          [\n            152.15052873427666,\n            -33.82243006904891\n          ],\n          [\n            150.1000346138806,\n            -34.257132625788756\n          ],\n          [\n            149.5776607193635,\n            -32.514709769700254\n          ],\n          [\n            151.6262528041627,\n            -32.08081674221862\n          ],\n          [\n            152.15052873427666,\n            -33.82243006904891\n          ]\n        ]\n      ],\n      \"type\": \"Polygon\"\n    },\n    \"properties\": {\n      \"datetime\": \"2020-02-12T12:30:22Z\",\n      \"landsat:scene_id\": \"LC82081612020043LGN00\",\n      \"landsat:row\": \"161\",\n      \"gsd\": 15,\n      \"eo:bands\": [\n        {\n          \"gsd\": 30,\n          \"name\": \"B1\",\n          \"common_name\": \"coastal\",\n          \"center_wavelength\": 0.44,\n          \"full_width_half_max\": 0.02\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B2\",\n          \"common_name\": \"blue\",\n          \"center_wavelength\": 0.48,\n          \"full_width_half_max\": 0.06\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B3\",\n          \"common_name\": \"green\",\n          \"center_wavelength\": 0.56,\n          \"full_width_half_max\": 0.06\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B4\",\n          \"common_name\": \"red\",\n          \"center_wavelength\": 0.65,\n          \"full_width_half_max\": 0.04\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B5\",\n          \"common_name\": \"nir\",\n          \"center_wavelength\": 0.86,\n          \"full_width_half_max\": 0.03\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B6\",\n          \"common_name\": \"swir16\",\n          \"center_wavelength\": 1.6,\n          \"full_width_half_max\": 0.08\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B7\",\n          \"common_name\": \"swir22\",\n          \"center_wavelength\": 2.2,\n          \"full_width_half_max\": 0.2\n        },\n        {\n          \"gsd\": 15,\n          \"name\": \"B8\",\n          \"common_name\": \"pan\",\n          \"center_wavelength\": 0.59,\n          \"full_width_half_max\": 0.18\n        },\n        {\n          \"gsd\": 30,\n          \"name\": \"B9\",\n          \"common_name\": \"cirrus\",\n          \"center_wavelength\": 1.37,\n          \"full_width_half_max\": 0.02\n        },\n        {\n          \"gsd\": 100,\n          \"name\": \"B10\",\n          \"common_name\": \"lwir11\",\n          \"center_wavelength\": 10.9,\n          \"full_width_half_max\": 0.8\n        },\n        {\n          \"gsd\": 100,\n          \"name\": \"B11\",\n          \"common_name\": \"lwir12\",\n          \"center_wavelength\": 12,\n          \"full_width_half_max\": 1\n        }\n      ],\n      \"landsat:revision\": \"00\",\n      \"view:sun_azimuth\": -148.83296771,\n      \"instrument\": \"OLI_TIRS\",\n      \"landsat:product_id\": \"LC08_L1GT_208161_20200212_20200212_01_RT\",\n      \"eo:cloud_cover\": 0,\n      \"landsat:tier\": \"RT\",\n      \"landsat:processing_level\": \"L1GT\",\n      \"landsat:column\": \"208\",\n      \"platform\": \"landsat-8\",\n      \"proj:epsg\": 32756,\n      \"view:sun_elevation\": -37.30791534,\n      \"view:off_nadir\": 0,\n      \"height\": 2500,\n      \"width\": 2500\n    },\n    \"bbox\": [\n      149.57574,\n      -34.25796,\n      152.15194,\n      -32.07915\n    ],\n    \"collection\": \"test-collection\",\n    \"assets\": {\n      \"ANG\": {\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_ANG.txt\",\n        \"type\": \"text/plain\",\n        \"title\": \"Angle Coefficients File\",\n        \"description\": \"Collection 2 Level-1 Angle Coefficients File (ANG)\"\n      },\n      \"SR_B1\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B1.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Coastal/Aerosol Band (B1)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B1\",\n            \"common_name\": \"coastal\",\n            \"center_wavelength\": 0.44,\n            \"full_width_half_max\": 0.02\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Coastal/Aerosol Band (B1) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"SR_B2\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B2.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Blue Band (B2)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B2\",\n            \"common_name\": \"blue\",\n            \"center_wavelength\": 0.48,\n            \"full_width_half_max\": 0.06\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Blue Band (B2) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"SR_B3\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B3.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Green Band (B3)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B3\",\n            \"common_name\": \"green\",\n            \"center_wavelength\": 0.56,\n            \"full_width_half_max\": 0.06\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Green Band (B3) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"SR_B4\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B4.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Red Band (B4)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B4\",\n            \"common_name\": \"red\",\n            \"center_wavelength\": 0.65,\n            \"full_width_half_max\": 0.04\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Red Band (B4) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"SR_B5\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B5.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Near Infrared Band 0.8 (B5)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B5\",\n            \"common_name\": \"nir08\",\n            \"center_wavelength\": 0.86,\n            \"full_width_half_max\": 0.03\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Near Infrared Band 0.8 (B5) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"SR_B6\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B6.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Short-wave Infrared Band 1.6 (B6)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B6\",\n            \"common_name\": \"swir16\",\n            \"center_wavelength\": 1.6,\n            \"full_width_half_max\": 0.08\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Short-wave Infrared Band 1.6 (B6) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"SR_B7\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_SR_B7.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Short-wave Infrared Band 2.2 (B7)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"SR_B7\",\n            \"common_name\": \"swir22\",\n            \"center_wavelength\": 2.2,\n            \"full_width_half_max\": 0.2\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Collection 2 Level-2 Short-wave Infrared Band 2.2 (B7) Surface Reflectance\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"ST_QA\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_ST_QA.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Surface Temperature Quality Assessment Band\",\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Landsat Collection 2 Level-2 Surface Temperature Band Surface Temperature Product\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"ST_B10\": {\n        \"gsd\": 100,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_ST_B10.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Surface Temperature Band (B10)\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 100,\n            \"name\": \"ST_B10\",\n            \"common_name\": \"lwir11\",\n            \"center_wavelength\": 10.9,\n            \"full_width_half_max\": 0.8\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Landsat Collection 2 Level-2 Surface Temperature Band (B10) Surface Temperature Product\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"MTL.txt\": {\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_MTL.txt\",\n        \"type\": \"text/plain\",\n        \"title\": \"Product Metadata File\",\n        \"description\": \"Collection 2 Level-1 Product Metadata File (MTL)\"\n      },\n      \"MTL.xml\": {\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_MTL.xml\",\n        \"type\": \"application/xml\",\n        \"title\": \"Product Metadata File (xml)\",\n        \"description\": \"Collection 2 Level-1 Product Metadata File (xml)\"\n      },\n      \"ST_DRAD\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_ST_DRAD.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Downwelled Radiance Band\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"ST_DRAD\",\n            \"description\": \"downwelled radiance\"\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Landsat Collection 2 Level-2 Downwelled Radiance Band Surface Temperature Product\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"ST_EMIS\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_ST_EMIS.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Emissivity Band\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"ST_EMIS\",\n            \"description\": \"emissivity\"\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Landsat Collection 2 Level-2 Emissivity Band Surface Temperature Product\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      },\n      \"ST_EMSD\": {\n        \"gsd\": 30,\n        \"href\": \"https://landsateuwest.blob.core.windows.net/landsat-c2/level-2/standard/oli-tirs/2021/108/066/LC08_L2SP_108066_20210712_20210720_02_T1/LC08_L2SP_108066_20210712_20210720_02_T1_ST_EMSD.TIF\",\n        \"type\": \"image/tiff; application=geotiff; profile=cloud-optimized\",\n        \"title\": \"Emissivity Standard Deviation Band\",\n        \"eo:bands\": [\n          {\n            \"gsd\": 30,\n            \"name\": \"ST_EMSD\",\n            \"description\": \"emissivity standard deviation\"\n          }\n        ],\n        \"proj:shape\": [\n          7731,\n          7591\n        ],\n        \"description\": \"Landsat Collection 2 Level-2 Emissivity Standard Deviation Band Surface Temperature Product\",\n        \"proj:transform\": [\n          30,\n          0,\n          304185,\n          0,\n          -30,\n          -843585\n        ]\n      }\n    },\n    \"links\": [\n      {\n        \"href\": \"http://localhost:8081/collections/landsat-8-l1/items/LC82081612020043\",\n        \"rel\": \"self\",\n        \"type\": \"application/geo+json\"\n      },\n      {\n        \"href\": \"http://localhost:8081/collections/landsat-8-l1\",\n        \"rel\": \"parent\",\n        \"type\": \"application/json\"\n      },\n      {\n        \"href\": \"http://localhost:8081/collections/landsat-8-l1\",\n        \"rel\": \"collection\",\n        \"type\": \"application/json\"\n      },\n      {\n        \"href\": \"http://localhost:8081/\",\n        \"rel\": \"root\",\n        \"type\": \"application/json\"\n      }\n    ]\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/collections/test-collection/items",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections",
+						"test-collection",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Data Cube Collection",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"stac_version\": \"1.0.0\",\n  \"stac_extensions\": [\n    \"https://stac-extensions.github.io/datacube/v2.0.0/schema.json\"\n  ],\n  \"type\": \"Collection\",\n  \"id\": \"daymet-hi-annual\",\n  \"title\": \"Daymet Hawaii Annual\",\n  \"description\": \"Daymet is a data product derived from a collection of algorithms and computer software designed to interpolate and extrapolate from daily meteorological observations to produce gridded estimates of daily weather parameters. Weather parameters generated include daily surfaces of minimum and maximum temperature, precipitation, vapor pressure, radiation, snow water equivalent, and day length produced on a 1 km x 1 km gridded surface. The motivation for producing Daymet is to provide measurements of near-surface meteorological conditions where no instrumentation exists. Having estimates of these surfaces is critical to understanding many processes in the terrestrial biogeochemical system.\",\n  \"license\": \"proprietary\",\n  \"extent\": {\n    \"spatial\": {\n      \"bbox\": [\n        [\n          -160.3056,\n          17.9539,\n          -154.772,\n          23.5186\n        ]\n      ]\n    },\n    \"temporal\": {\n      \"interval\": [\n        [\n          \"1980-01-01T12:00:00Z\",\n          \"2019-12-31T12:00:00Z\"\n        ]\n      ]\n    }\n  },\n  \"links\": [],\n  \"assets\": {\n    \"data\": {\n      \"href\": \"abfs://daymet-zarr/annual/hi.zarr\",\n      \"title\": \"Annual Hawaii Daymet zarr root\",\n      \"description\": \"The root of the annual Hawaii Daymet Zarr Group on Azure Blob Storage.\",\n      \"roles\": [\n        \"data\",\n        \"zarr-root\",\n        \"azure-blob-storge\"\n      ]\n    }\n  },\n  \"cube:dimensions\": {\n    \"time\": {\n      \"type\": \"temporal\",\n      \"extent\": [\n        \"1980:00:00T00:00:00Z\",\n        \"2020:00:00T00:00:00Z\"\n      ],\n      \"description\": \"Annual\",\n      \"step\": \"P1Y\"\n    },\n    \"x\": {\n      \"type\": \"spatial\",\n      \"axis\": \"x\",\n      \"description\": \"North American Lambert Conformal Conic, 1KM grid.\",\n      \"extent\": [\n        -622000,\n        -5519250\n      ],\n      \"step\": 1000,\n      \"reference_system\": \"PROJCRS[\\\"undefined\\\",BASEGEOGCRS[\\\"undefined\\\",DATUM[\\\"undefined\\\",ELLIPSOID[\\\"undefined\\\",6378137,298.257223563,LENGTHUNIT[\\\"metre\\\",1,ID[\\\"EPSG\\\",9001]]]],PRIMEM[\\\"Greenwich\\\",0,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8901]]],CONVERSION[\\\"unknown\\\",METHOD[\\\"Lambert Conic Conformal (2SP)\\\",ID[\\\"EPSG\\\",9802]],PARAMETER[\\\"Latitude of 1st standard parallel\\\",25,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8823]],PARAMETER[\\\"Latitude of 2nd standard parallel\\\",60,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8824]],PARAMETER[\\\"Latitude of false origin\\\",42.5,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8821]],PARAMETER[\\\"Longitude of false origin\\\",-100,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8822]],PARAMETER[\\\"Easting at false origin\\\",0,LENGTHUNIT[\\\"metre\\\",1],ID[\\\"EPSG\\\",8826]],PARAMETER[\\\"Northing at false origin\\\",0,LENGTHUNIT[\\\"metre\\\",1],ID[\\\"EPSG\\\",8827]]],CS[Cartesian,2],AXIS[\\\"(E)\\\",east,ORDER[1],LENGTHUNIT[\\\"metre\\\",1,ID[\\\"EPSG\\\",9001]]],AXIS[\\\"(N)\\\",north,ORDER[2],LENGTHUNIT[\\\"metre\\\",1,ID[\\\"EPSG\\\",9001]]]]\"\n    },\n    \"y\": {\n      \"type\": \"spatial\",\n      \"axis\": \"y\",\n      \"description\": \"North American Lambert Conformal Conic, 1KM grid.\",\n      \"extent\": [\n        -5802250,\n        -39000\n      ],\n      \"step\": 1000,\n      \"reference_system\": \"PROJCRS[\\\"undefined\\\",BASEGEOGCRS[\\\"undefined\\\",DATUM[\\\"undefined\\\",ELLIPSOID[\\\"undefined\\\",6378137,298.257223563,LENGTHUNIT[\\\"metre\\\",1,ID[\\\"EPSG\\\",9001]]]],PRIMEM[\\\"Greenwich\\\",0,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8901]]],CONVERSION[\\\"unknown\\\",METHOD[\\\"Lambert Conic Conformal (2SP)\\\",ID[\\\"EPSG\\\",9802]],PARAMETER[\\\"Latitude of 1st standard parallel\\\",25,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8823]],PARAMETER[\\\"Latitude of 2nd standard parallel\\\",60,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8824]],PARAMETER[\\\"Latitude of false origin\\\",42.5,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8821]],PARAMETER[\\\"Longitude of false origin\\\",-100,ANGLEUNIT[\\\"degree\\\",0.0174532925199433],ID[\\\"EPSG\\\",8822]],PARAMETER[\\\"Easting at false origin\\\",0,LENGTHUNIT[\\\"metre\\\",1],ID[\\\"EPSG\\\",8826]],PARAMETER[\\\"Northing at false origin\\\",0,LENGTHUNIT[\\\"metre\\\",1],ID[\\\"EPSG\\\",8827]]],CS[Cartesian,2],AXIS[\\\"(E)\\\",east,ORDER[1],LENGTHUNIT[\\\"metre\\\",1,ID[\\\"EPSG\\\",9001]]],AXIS[\\\"(N)\\\",north,ORDER[2],LENGTHUNIT[\\\"metre\\\",1,ID[\\\"EPSG\\\",9001]]]]\"\n    },\n    \"nv\": {\n      \"type\": \"count\",\n      \"description\": \"Size of time_bnds.\",\n      \"values\": [\n        0,\n        1\n      ]\n    }\n  },\n  \"cube:variables\": {\n    \"lat\": {\n      \"type\": \"auxiliary\",\n      \"extent\": [\n        17.960035,\n        23.512327\n      ],\n      \"description\": \"latitude coordinate\",\n      \"unit\": \"degrees_north\",\n      \"dimensions\": [\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"lon\": {\n      \"type\": \"auxiliary\",\n      \"extent\": [\n        -160.29884,\n        -154.77806\n      ],\n      \"description\": \"longitude coordinate\",\n      \"unit\": \"degrees_east\",\n      \"dimensions\": [\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"prcp\": {\n      \"type\": \"data\",\n      \"description\": \"The total accumulated precipitation over the monthly period of the daily total precipitation. Sum of all forms of precipitation converted to a water-equivalent depth.\",\n      \"extent\": [\n        0,\n        null\n      ],\n      \"unit\": \"mm\",\n      \"dimensions\": [\n        \"time\",\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"swe\": {\n      \"type\": \"data\",\n      \"description\": \"The average of the daily snow water equivalent (the amount of water contained within the snowpack) in kilograms per square meter over the monthly period.\",\n      \"extent\": [\n        0,\n        null\n      ],\n      \"unit\": \"kg/m2\",\n      \"dimensions\": [\n        \"time\",\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"tmin\": {\n      \"type\": \"data\",\n      \"description\": \"The average minimum temperature for a daily period over the entire monthly period.\",\n      \"unit\": \"degrees C\",\n      \"dimensions\": [\n        \"time\",\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"tmax\": {\n      \"type\": \"data\",\n      \"description\": \"The average maximum temperature for a daily period over the entire monthly period.\",\n      \"unit\": \"degrees C\",\n      \"dimensions\": [\n        \"time\",\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"vp\": {\n      \"type\": \"data\",\n      \"description\": \"The average of the daily average partial pressure of water vapor over the monthly period.\",\n      \"unit\": \"Pa\",\n      \"dimensions\": [\n        \"time\",\n        \"y\",\n        \"x\"\n      ]\n    },\n    \"time_bnds\": {\n      \"type\": \"data\",\n      \"description\": \"\",\n      \"dimensions\": [\n        \"time\",\n        \"nv\"\n      ]\n    },\n    \"lambert_conformal_conic\": {\n      \"type\": \"data\",\n      \"description\": \"Lambert Conformal Conic.\",\n      \"values\": [\n        -32767\n      ],\n      \"dimensions\": []\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/collections",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Data Cube Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"stac_version\": \"1.0.0\",\n  \"stac_extensions\": [\n    \"https://stac-extensions.github.io/datacube/v2.0.0/schema.json\"\n  ],\n  \"id\": \"datacube-1234\",\n  \"collection\": \"daymet-hi-annual\",\n  \"type\": \"Feature\",\n  \"geometry\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [\n      [\n        [\n          -122.308150179,\n          37.488035566\n        ],\n        [\n          -122.597502109,\n          37.538869539\n        ],\n        [\n          -122.576687533,\n          37.613537207\n        ],\n        [\n          -122.2880486,\n          37.562818007\n        ],\n        [\n          -122.308150179,\n          37.488035566\n        ]\n      ]\n    ]\n  },\n  \"bbox\": [\n    -122.59750209,\n    37.48803556,\n    -122.2880486,\n    37.613537207\n  ],\n  \"properties\": {\n    \"title\": \"Multi-dimensional data cube 123 in a STAC Item.\",\n    \"datetime\": \"2016-05-03T13:21:30.040Z\",\n    \"cmip5:activity_id\" : \"\",\n    \"cmip5:institution_id\" : \"CCCS\",\n    \"cmip5:source_id\" : \"\",\n    \"cmip5:experiment_id\" : \"historical,rcp26,rcp45,rcp85\",\n    \"cmip5:member_id\" : \"\",\n    \"cmip5:table_id\" : \"Table day (10 Jun 2010)\",\n    \"cmip5:variable_id\" : \"tx_mean\",\n    \"cmip5:grid_label\" : \"\",\n    \"cmip5:conventions\" : \"CF-1.4\",\n    \"cmip5:frequency\" : \"day\",\n    \"cmip5:modeling_realm\" : \"atmos\",\n    \"cube:dimensions\": {\n      \"x\": {\n        \"type\": \"spatial\",\n        \"axis\": \"x\",\n        \"extent\": [\n          -122.59750209,\n          -122.2880486\n        ],\n        \"reference_system\": 4326\n      },\n      \"y\": {\n        \"type\": \"spatial\",\n        \"axis\": \"y\",\n        \"extent\": [\n          37.48803556,\n          37.613537207\n        ],\n        \"reference_system\": 4326\n      },\n      \"pressure_levels\": {\n        \"type\": \"spatial\",\n        \"axis\": \"z\",\n        \"extent\": [\n          0,\n          1000\n        ],\n        \"step\": 100,\n        \"unit\": \"Pa\"\n      },\n      \"metered_levels\": {\n        \"type\": \"spatial\",\n        \"axis\": \"z\",\n        \"values\": [\n          0,\n          10,\n          25,\n          50,\n          100,\n          1000\n        ],\n        \"unit\": \"m\"\n      },\n      \"time\": {\n        \"type\": \"temporal\",\n        \"values\": [\n          \"2016-05-03T13:21:30.040Z\"\n        ]\n      },\n      \"spectral\": {\n        \"type\": \"bands\",\n        \"values\": [\n          \"red\",\n          \"green\",\n          \"blue\"\n        ]\n      }\n    }\n  },\n  \"cube:variables\": {\n    \"temp\": {\n      \"dimensions\": [\n        \"time\",\n        \"y\",\n        \"x\",\n        \"pressure_levels\"\n      ],\n      \"type\": \"data\"\n    },\n    \"color\": {\n      \"dimensions\": [],\n      \"type\": \"auxiliary\",\n      \"values\": [\n        \"red\",\n        \"green\",\n        \"blue\"\n      ]\n    }\n  },\n  \"assets\": {\n    \"data\": {\n      \"href\": \"http://cool-sat.com/catalog/datacube-123/data.nc\",\n      \"type\": \"application/netcdf\",\n      \"title\": \"netCDF Data cube\"\n    },\n    \"thumbnail\": {\n      \"href\": \"http://cool-sat.com/catalog/datacube-123/thumbnail.png\",\n      \"type\": \"image/png\",\n      \"title\": \"Thumbnail\"\n    }\n  },\n  \"links\": [\n    {\n      \"rel\": \"self\",\n      \"href\": \"http://cool-sat.com/catalog/datacube-123/example-item.json\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/collections/daymet-hi-annual/items",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections",
+						"daymet-hi-annual",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Basic Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"collections\":[\"test-collection\"],\n   \"filter\":{\n      \"gt\":[\n         {\n            \"property\":\"proj:epsg\"\n         },\n         32755\n      ]\n   }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Data Cube Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"collections\": [\n    \"daymet-hi-annual\"\n  ],\n  \"filter\": {\n    \"eq\": [\n      {\n        \"property\": \"cube:dimensions.pressure_levels.unit\"\n      },\n      \"Pa\"\n    ],\n    \"gt\": [\n      {\n        \"property\": \"cube:dimensions.y.reference_system\"\n      },\n      4325\n    ],\n    \"like\": [\n      {\n        \"property\": \"cmip5:variable_id\"\n      },\n      \"tx_%\"\n    ],\n    \"between\": [\n      {\n        \"property\": \"cube:dimensions.y.reference_system\"\n      },\n      4300,\n      4400\n    ],\n    \"in\": [\n      {\n        \"property\": \"cmip5:frequency\"\n      },\n      [\n        \"day\",\n        \"month\",\n        \"year\"\n      ]\n    ],\n    \"intersects\": [\n      {\n        \"property\": \"geometry\"\n      },\n      {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n          [\n            [\n              -122.308150179,\n              37.488035566\n            ],\n            [\n              -122.597502109,\n              37.538869539\n            ],\n            [\n              -122.576687533,\n              37.613537207\n            ],\n            [\n              -122.2880486,\n              37.562818007\n            ],\n            [\n              -122.308150179,\n              37.488035566\n            ]\n          ]\n        ]\n      }\n    ],\n    \"anyinteracts\": [\n      {\n        \"property\": \"datetime\"\n      },\n      [\n        \"2015-05-03T13:21:30.040Z\",\n        \"2017-05-03T13:21:30.040Z\"\n      ]\n    ]\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search BCCAQv2 items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"filter\":{\n      \"and\":[\n         {\n            \"eq\":[\n               {\n                  \"property\":\"cmip5:frequency\"\n               },\n               \"day\"\n            ]\n         },\n         {\n            \"like\":[\n               {\n                  \"property\":\"collection\"\n               },\n               \"%tx_mean%\"\n            ]\n         },\n         {\n            \"like\":[\n               {\n                  \"property\":\"cmip5:experiment_id\"\n               },\n               \"%rcp85%\"\n            ]\n         }\n      ],\n      \"intersects\":[\n         {\n            \"property\":\"geometry\"\n         },\n         {\n            \"type\":\"Polygon\",\n            \"coordinates\":[\n               [\n                  [\n                     -140.99778,\n                     41.6751050889\n                  ],\n                  [\n                     -140.99778,\n                     83.23324\n                  ],\n                  [\n                     -52.6480987209,\n                     83.23324\n                  ],\n                  [\n                     -52.6480987209,\n                     41.6751050889\n                  ],\n                  [\n                     -140.99778,\n                     41.6751050889\n                  ]\n               ]\n            ]\n         }\n      ],\n      \"anyinteracts\":[\n         {\n            \"property\":\"datetime\"\n         },\n         [\n            \"2010-05-03T13:21:30.040Z\",\n            \"2022-05-03T13:21:30.040Z\"\n         ]\n      ]\n   }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/search",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Queryables",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/collections/test-collection/queryables",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"collections",
+						"test-collection",
+						"queryables"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
