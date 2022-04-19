@@ -3,6 +3,7 @@
 from fastapi.responses import ORJSONResponse
 
 from stac_fastapi.api.app import StacApi
+from stac_fastapi.api.models import create_get_request_model, create_post_request_model
 from stac_fastapi.extensions.core import (
     FieldsExtension,
     QueryExtension,
@@ -10,6 +11,7 @@ from stac_fastapi.extensions.core import (
     TransactionExtension,
     FilterExtension,
     ContextExtension,
+    TokenPaginationExtension,
 )
 from stac_fastapi.pgstac.config import Settings
 from stac_fastapi.pgstac.core import CoreCrudClient
@@ -20,22 +22,28 @@ from starlette.middleware.cors import CORSMiddleware
 
 settings = Settings()
 
+extensions = [
+    TransactionExtension(
+        client=TransactionsClient(),
+        settings=settings,
+        response_class=ORJSONResponse,
+    ),
+    QueryExtension(),
+    SortExtension(),
+    FieldsExtension(),
+    FilterExtension(),
+    ContextExtension(),
+    TokenPaginationExtension(),
+]
+
+post_request_model = create_post_request_model(extensions, base_model=PgstacSearch)
+
 api = StacApi(
     settings=settings,
-    extensions=[
-        TransactionExtension(
-            client=TransactionsClient(),
-            settings=settings,
-            response_class=ORJSONResponse,
-        ),
-        QueryExtension(),
-        SortExtension(),
-        FieldsExtension(),
-        FilterExtension(),
-        ContextExtension(),
-    ],
-    client=CoreCrudClient(),
-    search_request_model=PgstacSearch,
+    extensions=extensions,
+    client=CoreCrudClient(post_request_model=post_request_model),
+    search_get_request_model=create_get_request_model(extensions),
+    search_post_request_model=post_request_model,
     response_class=ORJSONResponse,
     title="Data Analytics for Canadian Climate Services STAC API",
     description="Searchable spatiotemporal metadata describing climate and Earth observation datasets."

@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "7000:8000"
+    depends_on:
+      - database
 
   stac-browser:
     container_name: stac-browser
@@ -20,13 +22,13 @@ services:
   # taken from https://github.com/stac-utils/stac-fastapi/blob/master/docker-compose.yml
   database:
     container_name: stac-db
-    image: ghcr.io/stac-utils/pgstac:v0.3.3
+    image: ghcr.io/stac-utils/pgstac:v0.5.0
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgis
     ports:
-      - "5439:5432"
+      - "5432:5432"
     command: postgres -N 500
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -42,7 +44,7 @@ services:
     volumes:
       - ./config/nginx/conf.d/stac.conf:/etc/nginx/conf.d/stac.conf
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /home/ubuntu/keys/star.crim.ca.pem:/etc/nginx/cert.pem
+      - /Users/provenma/keys/star.crim.ca.pem:/etc/nginx/cert.pem
       # - /home/ubuntu/keys/stac-dev.key.pem:/etc/nginx/privkey.pem
     restart: always
 
@@ -50,7 +52,7 @@ services:
     image: minio/minio:latest
     container_name: minio
     entrypoint: sh
-    command: -c 'mkdir -p /export/blob && /usr/bin/minio server --console-address :9001 /export'
+    command: -c 'mkdir -p /export/blob && /usr/bin/minio server :9001 /export'
     environment:
       - MINIO_ROOT_USER=minio
       - MINIO_ROOT_PASSWORD=minio123
