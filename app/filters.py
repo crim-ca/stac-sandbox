@@ -9,9 +9,10 @@ __license__ = 'BSD - see LICENSE file in top-level package directory'
 __contact__ = 'mathieu.provencher@crim.ca'
 
 import asyncio
+import logging
 import threading
-from stac_fastapi.types.core import BaseFiltersClient
-from .utils import dict_merge
+from stac_fastapi.types.core import AsyncBaseFiltersClient
+from utils import dict_merge
 
 from stac_fastapi.pgstac.core import CoreCrudClient
 
@@ -33,35 +34,40 @@ def start_loop(loop):
 
 
 @attr.s
-class FiltersClient(BaseFiltersClient):
+class FiltersClient(AsyncBaseFiltersClient):
 
-    def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
+    async def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
 
         properties = {}
 
-        new_loop = asyncio.new_event_loop()
-        t = threading.Thread(target=start_loop, args=(new_loop,))
-        t.start()
+        # new_loop = asyncio.new_event_loop()
+        # t = threading.Thread(target=start_loop, args=(new_loop,))
+        # t.start()
 
-        collection = asyncio.run_coroutine_threadsafe(CoreCrudClient.get_collection(self, "c604ffb6d610adbb9a6b4787db7b8fd7", **kwargs), new_loop)
+        # collection = asyncio.run_coroutine_threadsafe(CoreCrudClient.get_collection(self, "c604ffb6d610adbb9a6b4787db7b8fd7", **kwargs), new_loop)
 
-        collection = collection.result(3)
+        # collection = collection.result(3)
+
+        collection = await CoreCrudClient.get_collection(self, "c604ffb6d610adbb9a6b4787db7b8fd7", **kwargs)
+        
+        CoreCrudClient.get_item()
+        logger = logging.getLogger('app')
+        logger.debug('BLABLA')
 
         # try:
         # collection = ElasticsearchCollection.get(id=collection_id)
         # except NotFoundError:
             # raise (NotFoundError(404, f'Collection: {collection_id} not found'))
 
-        if summaries := collection.get_summaries():
-            for k, v in summaries.items():
-                prop = {
-                    k: {
-                        'title': k.replace('_', ' ').title(),
-                        'type': 'string',
-                        'enum': v
-                    }
+        for k, v in collection["summaries"]:
+            prop = {
+                k: {
+                    'title': k.replace('_', ' ').title(),
+                    'type': 'string',
+                    'enum': v
                 }
-                properties.update(prop)
+            }
+            properties.update(prop)
 
         if extent := collection.get_extent():
             temp_min, temp_max = extent['temporal']['interval'][0]
@@ -86,7 +92,7 @@ class FiltersClient(BaseFiltersClient):
 
         return properties
 
-    def get_queryables(
+    async def get_queryables(
             self, collection_id: Optional[str] = None, **kwargs
     ) -> Dict[str, Any]:
 
@@ -94,7 +100,7 @@ class FiltersClient(BaseFiltersClient):
 
         if collection_id:
 
-            properties = self.collection_summaries(collection_id, **kwargs)
+            properties = await self.collection_summaries(collection_id, **kwargs)
 
             schema['$id'] = f'{kwargs["request"].base_url}/{collection_id}/queryables'
             schema['title'] = f'Queryables for {collection_id}'

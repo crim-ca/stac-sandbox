@@ -19,7 +19,7 @@ from stac_fastapi.pgstac.db import close_db_connection, connect_to_db
 from stac_fastapi.pgstac.transactions import TransactionsClient
 from stac_fastapi.pgstac.types.search import PgstacSearch
 from starlette.middleware.cors import CORSMiddleware
-from .filters import FiltersClient
+from filters import FiltersClient
 
 settings = Settings()
 
@@ -78,7 +78,7 @@ def run():
         import uvicorn
 
         uvicorn.run(
-            "stac_fastapi.pgstac.app:app",
+            "stac_app:app",
             host=settings.app_host,
             port=settings.app_port,
             log_level="debug",
