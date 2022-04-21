@@ -8,9 +8,6 @@ __copyright__ = 'Copyright 2022 Computer Research Institute of Montréal'
 __license__ = 'BSD - see LICENSE file in top-level package directory'
 __contact__ = 'mathieu.provencher@crim.ca'
 
-import asyncio
-import logging
-import threading
 from stac_fastapi.types.core import AsyncBaseFiltersClient
 from utils import dict_merge
 
@@ -21,74 +18,24 @@ import attr
 from typing import Dict, Any, Optional
 
 
-class AsyncioEventThreadsafe(asyncio.Event):
-    def set(self):
-        self._loop.call_soon_threadsafe(super().set)
-
-    def clear(self):
-        self._loop.call_soon_threadsafe(super().clear)
-
-def start_loop(loop):
-    asyncio.set_event_loop(loop)
-    loop.run_forever()
-
-
 @attr.s
 class FiltersClient(AsyncBaseFiltersClient):
 
     async def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
-
         properties = {}
+        core_crud_client = CoreCrudClient()
+        item_collection = await core_crud_client.item_collection(collection_id, 9999, **kwargs)
 
-        # new_loop = asyncio.new_event_loop()
-        # t = threading.Thread(target=start_loop, args=(new_loop,))
-        # t.start()
+        for feat in item_collection["features"]:
+            for property in feat["properties"]:
+                if property == "datetime":
+                    continue
 
-        # collection = asyncio.run_coroutine_threadsafe(CoreCrudClient.get_collection(self, "c604ffb6d610adbb9a6b4787db7b8fd7", **kwargs), new_loop)
+                if property not in properties:
+                    properties[property] = []
 
-        # collection = collection.result(3)
-
-        collection = await CoreCrudClient.get_collection(self, "c604ffb6d610adbb9a6b4787db7b8fd7", **kwargs)
-        
-        CoreCrudClient.get_item()
-        logger = logging.getLogger('app')
-        logger.debug('BLABLA')
-
-        # try:
-        # collection = ElasticsearchCollection.get(id=collection_id)
-        # except NotFoundError:
-            # raise (NotFoundError(404, f'Collection: {collection_id} not found'))
-
-        for k, v in collection["summaries"]:
-            prop = {
-                k: {
-                    'title': k.replace('_', ' ').title(),
-                    'type': 'string',
-                    'enum': v
-                }
-            }
-            properties.update(prop)
-
-        if extent := collection.get_extent():
-            temp_min, temp_max = extent['temporal']['interval'][0]
-            prop = {
-                'datetime': {
-                    'type': 'datetime',
-                    'minimum': temp_min,
-                    'maximum': temp_max
-                },
-                'bbox': {
-                    'description': 'bounding box for the collection',
-                    'type': 'array',
-                    'minItems': 4,
-                    'maxItems': 6,
-                    'items': {
-                        'type': 'number'
-                    }
-                }
-            }
-
-            properties.update(prop)
+                if feat["properties"][property] not in properties[property]:
+                    properties[property].append(feat["properties"][property])
 
         return properties
 
@@ -96,7 +43,7 @@ class FiltersClient(AsyncBaseFiltersClient):
             self, collection_id: Optional[str] = None, **kwargs
     ) -> Dict[str, Any]:
 
-        schema = super().get_queryables()
+        schema = await super().get_queryables()
 
         if collection_id:
 
@@ -105,7 +52,7 @@ class FiltersClient(AsyncBaseFiltersClient):
             schema['$id'] = f'{kwargs["request"].base_url}/{collection_id}/queryables'
             schema['title'] = f'Queryables for {collection_id}'
             schema['description'] = f'Queryable names and values for the {collection_id} collection'
-            schema['properties'] = properties
+            schema['summaries'] = properties
 
         else:
             query_params = kwargs['request'].query_params
