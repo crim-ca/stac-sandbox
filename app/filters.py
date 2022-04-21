@@ -20,6 +20,13 @@ from typing import Dict, Any, Optional
 
 @attr.s
 class FiltersClient(AsyncBaseFiltersClient):
+    """
+    Get queryables for given collections.
+
+    Eg:
+    One collection : http://127.0.0.1:8000/collections/c604ffb6d610adbb9a6b4787db7b8fd7/queryables
+    Multiple collections : http://127.0.0.1:8000/queryables?collections=0798aa197d54eb4332767a5a4077fb0f,c604ffb6d610adbb9a6b4787db7b8fd7
+    """
 
     async def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
         properties = {}
@@ -58,36 +65,36 @@ class FiltersClient(AsyncBaseFiltersClient):
             schema['description'] = f'Queryable names and values for the {collection_id} collection'
             schema['properties'] = properties
 
-        # else:
-        #     query_params = kwargs['request'].query_params
-        #     collections = query_params.get('collections', [])
-        #     if collections:
-        #         collections = collections.split(',')
-        #
-        #     properties = {}
-        #
-        #     for collection in collections:
-        #         if not properties:
-        #             # Initialise with first collection
-        #             properties = self.collection_summaries(collection)
-        #         else:
-        #             # Get properties of following collections
-        #             new_props = self.collection_summaries(collection)
-        #             intersect = {}
-        #             for prop, value in properties.items():
-        #                 if prop in new_props:
-        #                     if value.get('type') == 'string':
-        #                         intersect[prop] = dict_merge(value, new_props[prop])
-        #             properties = intersect
-        #
-        #             # If the resultant intersect is an empty dict, short-circuit
-        #             # loop.
-        #             if not properties:
-        #                 break
-        #
-        #     schema['$id'] = f'{kwargs["request"].base_url}/queryables'
-        #     schema['title'] = f'Global queryables, reduced by collection context'
-        #     schema['description'] = f'Queryable names and values'
-        #     schema['properties'] = properties
+        else:
+            query_params = kwargs['request'].query_params
+            collections = query_params.get('collections', [])
+            if collections:
+                collections = collections.split(',')
+
+            properties = {}
+
+            for collection in collections:
+                if not properties:
+                    # Initialise with first collection
+                    properties = await self.collection_summaries(collection, **kwargs)
+                else:
+                    # Get properties of following collections
+                    new_props = await self.collection_summaries(collection, **kwargs)
+                    intersect = {}
+                    for prop, value in properties.items():
+                        if prop in new_props:
+                            if value.get('type') == 'string':
+                                intersect[prop] = dict_merge(value, new_props[prop])
+                    properties = intersect
+
+                    # If the resultant intersect is an empty dict, short-circuit
+                    # loop.
+                    if not properties:
+                        break
+
+            schema['$id'] = f'{kwargs["request"].base_url}/queryables'
+            schema['title'] = f'Global queryables, reduced by collection context'
+            schema['description'] = f'Queryable names and values'
+            schema['properties'] = properties
 
         return schema
