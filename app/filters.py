@@ -8,28 +8,16 @@ __copyright__ = 'Copyright 2022 Computer Research Institute of Montréal'
 __license__ = 'BSD - see LICENSE file in top-level package directory'
 __contact__ = 'mathieu.provencher@crim.ca'
 
-# from .database import PostgresCollection
-
 import asyncio
 import threading
-import time
-from urllib import request
 from stac_fastapi.types.core import BaseFiltersClient
 from .utils import dict_merge
 
 from stac_fastapi.pgstac.core import CoreCrudClient
 
-from stac_fastapi.api.models import EmptyRequest
-
-from fastapi import FastAPI, Request
-
 import attr
 
 from typing import Dict, Any, Optional
-
-import concurrent.futures
-
-from starlette.requests import Request
 
 
 class AsyncioEventThreadsafe(asyncio.Event):
@@ -46,46 +34,6 @@ def start_loop(loop):
 
 @attr.s
 class FiltersClient(BaseFiltersClient):
-    ev_loop = asyncio.new_event_loop()
-
-    def __init__(self, name="Asyncio"):
-        self.ev_loop = asyncio.new_event_loop()
-
-        asyncio.get_child_watcher().attach_loop(self.ev_loop)
-
-        self.ev_loop.set_debug(enabled=True)
-
-        self.logger.debug("created asyncio loop: {}:{}".format(id(self.ev_loop), self.ev_loop))
-        self.ev_loop_done = AsyncioEventThreadsafe(loop=self.ev_loop)
-        self.ev_loop_done.clear()
-        self.ev_loop_started = threading.Event()
-
-    def run_async_coroutine(self, coroutine_to_run, timeout):
-        """Start coroutine in dedicated thread and await its result with timeout"""
-        start_time = time.time()
-        coro_future = self.start_async_coroutine(coroutine_to_run)
-        # run_coroutine_threadsafe returns future as concurrent.futures.Future() and not asyncio.Future
-        # so, we can await it with timeout inside current thread
-        try:
-            coro_result = coro_future.result(timeout=timeout)
-            # self.logger.debug("scheduled {} returned {}".format(coroutine_to_run, coro_result))
-            return coro_result
-        except concurrent.futures.TimeoutError:
-            passed = time.time() - start_time
-            # raise MolerTimeout(timeout=timeout,
-            #                    kind="run_async_coroutine({})".format(coroutine_to_run),
-            #                    passed_time=passed)
-        except concurrent.futures.CancelledError:
-            raise
-
-    def start_async_coroutine(self, coroutine_to_run):
-            """Start coroutine in dedicated thread, don't await its result"""
-            # we are scheduling to other thread (so, can't use asyncio.ensure_future() )
-            # self.logger.debug("scheduling {} into {}".format(coroutine_to_run, self.ev_loop))
-            coro_future = asyncio.run_coroutine_threadsafe(coroutine_to_run, loop=self.ev_loop)
-            return coro_future
-
-
 
     def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
 
@@ -95,10 +43,6 @@ class FiltersClient(BaseFiltersClient):
         t = threading.Thread(target=start_loop, args=(new_loop,))
         t.start()
 
-        # loop = asyncio.get_running_loop()
-        # start_loop(loop)
-
-        # collection = self.run_async_coroutine(CoreCrudClient.get_collection(self, "sss", **kwargs), 3)
         collection = asyncio.run_coroutine_threadsafe(CoreCrudClient.get_collection(self, "sss", **kwargs), new_loop)
 
         collection = collection.result(3)
