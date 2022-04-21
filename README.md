@@ -44,12 +44,12 @@ source app/env.local; uvicorn app.stac_app:app --reload --host 0.0.0.0
 # Dev and prod share the same PGStac db, started from `stac-fastapi`'s `docker-compose.yml`
 
 # Access dev STAC API:
-http://localhost:9090/external/http://mylocalip:8000
+http://127.0.0.1:9090/external/http://127.0.0.1/stac/
 # Or remote dev STAC API
-http://stac-dev.mydomain.ca/external/http://stac-dev.mydomain.ca:8000
+http://stac-dev.mydomain.ca/external/http://stac-dev.mydomain.ca/stac/
 
 # Access API docs
-http://mylocalip:8000/docs
+http://127.0.0.1/stac/api.html
 ```
 
 
@@ -65,6 +65,8 @@ http://mylocalip:8000/docs
 * `424 - Failed Dependency` relates to Postgres issue. Log the Postgres container to know why.
 
 * `ImportError: cannot import name 'InvalidQueryParameter' from 'stac_fastapi.types.errors'` is due to installation issue with `stac-fastapi`. Try reinstalling the `stac_fastapi` dependencies.
+
+* To reset the stack, `docker-compose down -v; docker-compose up -d --force-recreate`
 
 
 <hr/>
