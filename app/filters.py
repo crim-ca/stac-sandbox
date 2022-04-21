@@ -32,10 +32,14 @@ class FiltersClient(AsyncBaseFiltersClient):
                     continue
 
                 if property not in properties:
-                    properties[property] = []
+                    properties[property] = {
+                        "title": property.title().replace("_", " "),
+                        "type": "string",
+                        "enum": []
+                    }
 
-                if feat["properties"][property] not in properties[property]:
-                    properties[property].append(feat["properties"][property])
+                if feat["properties"][property] not in properties[property]["enum"]:
+                    properties[property]["enum"].append(feat["properties"][property])
 
         return properties
 
