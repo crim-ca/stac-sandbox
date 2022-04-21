@@ -19,6 +19,7 @@ from stac_fastapi.pgstac.db import close_db_connection, connect_to_db
 from stac_fastapi.pgstac.transactions import TransactionsClient
 from stac_fastapi.pgstac.types.search import PgstacSearch
 from starlette.middleware.cors import CORSMiddleware
+from .filters import FiltersClient
 
 settings = Settings()
 
@@ -31,7 +32,7 @@ extensions = [
     QueryExtension(),
     SortExtension(),
     FieldsExtension(),
-    FilterExtension(),
+    FilterExtension(client=FiltersClient()),
     ContextExtension(),
     TokenPaginationExtension(),
 ]
