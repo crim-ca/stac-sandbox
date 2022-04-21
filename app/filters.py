@@ -43,7 +43,7 @@ class FiltersClient(BaseFiltersClient):
         t = threading.Thread(target=start_loop, args=(new_loop,))
         t.start()
 
-        collection = asyncio.run_coroutine_threadsafe(CoreCrudClient.get_collection(self, "sss", **kwargs), new_loop)
+        collection = asyncio.run_coroutine_threadsafe(CoreCrudClient.get_collection(self, "c604ffb6d610adbb9a6b4787db7b8fd7", **kwargs), new_loop)
 
         collection = collection.result(3)
 
