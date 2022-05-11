@@ -11,11 +11,15 @@ ENV PATH=$PATH:/install/bin
 
 ARG install_dev_dependencies=true
 
-RUN git clone https://github.com/stac-utils/stac-fastapi.git
+# TODO : temporary fix
+RUN git clone https://github.com/matprov/stac-fastapi.git
 
 RUN git clone https://github.com/vishnubob/wait-for-it.git
 
 WORKDIR /stac-fastapi
+
+# TODO : temporary fix
+RUN git checkout fix_search_base
 
 RUN pip install \
       -e stac_fastapi/api \
