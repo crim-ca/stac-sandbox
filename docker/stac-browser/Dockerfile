@@ -1,8 +1,8 @@
-FROM node
+FROM node:14
 
 ENV NODE_VERSION stable
 ENV NPM_SCRIPT start
-ENV NODE_OPTIONS=--openssl-legacy-provider
+# ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN git clone https://github.com/radiantearth/stac-browser.git && cd stac-browser && git checkout v3
 

@@ -57,7 +57,7 @@ services:
     volumes:
       - ./config/nginx/conf.d/stac.conf:/etc/nginx/conf.d/stac.conf
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /Users/provenma/keys/star.crim.ca.pem:/etc/nginx/cert.pem
+      # - /Users/provenma/keys/star.crim.ca.pem:/etc/nginx/cert.pem
       # - /home/ubuntu/keys/stac-dev.key.pem:/etc/nginx/privkey.pem
     restart: always
 
