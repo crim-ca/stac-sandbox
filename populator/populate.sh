@@ -6,16 +6,19 @@ set -ex
 
 # reset the STAC API data by using `docker-compose down -v; docker-compose up -d --force-recreate`
 
-cd ../asset-scanner-example
 eval "$(conda shell.bash hook)"
 conda activate ceda-workflow-3.9-1
 
 # create collections
-python3 scripts/collection_processor.py scripts/collections.yaml
+python3 collection_processor.py collections.yaml
+
+cd ../asset-scanner-example
 
 # add items
 python3 -m asset_scanner.scripts.asset_scanner conf/thredds-extract-assets-2.yaml        # CMIP6
 python3 -m asset_scanner.scripts.asset_scanner conf/thredds-extract-assets.yaml          # CMIP5
 
+cd ../stac-sandbox/scripts
+
 # update collection summaries
-python3 scripts/collection_processor.py scripts/collections.yaml
+python3 collection_processor.py collections.yaml
