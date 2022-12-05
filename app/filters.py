@@ -70,7 +70,7 @@ class FiltersClient(AsyncBaseFiltersClient):
         if collection_id:
             properties = await self.collection_summaries(collection_id, **kwargs)
 
-            schema['$id'] = f'{kwargs["request"].base_url}/{collection_id}/queryables'
+            schema['$id'] = f'{kwargs["request"].base_url}{collection_id}/queryables'
             schema['title'] = f'Queryables for {collection_id}'
             schema['description'] = f'Queryable names and values for the {collection_id} collection'
             schema['properties'] = properties
