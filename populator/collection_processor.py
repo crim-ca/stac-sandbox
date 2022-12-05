@@ -100,11 +100,9 @@ class CollectionProcessor:
         Returns the collection with updated summaries.
         """
         summaries = {}
-        drop_properties = ["uri", "filename", "extension"]
 
         for k, v in stac_collection_queryables["properties"].items():
-            if k not in drop_properties:
-                summaries[k] = v["enum"]
+            summaries[k] = v["enum"]
 
         stac_collection["summaries"] = summaries
 
