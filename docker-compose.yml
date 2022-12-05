@@ -32,7 +32,7 @@ services:
   # taken from https://github.com/stac-utils/stac-fastapi/blob/master/docker-compose.yml
   database:
     container_name: stac-db
-    image: ghcr.io/stac-utils/pgstac:v0.5.0
+    image: ghcr.io/stac-utils/pgstac:v0.6.10
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password

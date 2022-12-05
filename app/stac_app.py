@@ -12,6 +12,7 @@ from stac_fastapi.extensions.core import (
     FilterExtension,
     ContextExtension,
     TokenPaginationExtension,
+    PaginationExtension
 )
 from stac_fastapi.pgstac.config import Settings
 from stac_fastapi.pgstac.core import CoreCrudClient
@@ -19,7 +20,11 @@ from stac_fastapi.pgstac.db import close_db_connection, connect_to_db
 from stac_fastapi.pgstac.transactions import TransactionsClient
 from stac_fastapi.pgstac.types.search import PgstacSearch
 from starlette.middleware.cors import CORSMiddleware
+
+# TODO : Ok for now to use custom `FiltersClient, but will eventually need to use the official
+#  `stac_fastapi.pgstac.extensions.filter` one
 from filters import FiltersClient
+# from stac_fastapi.pgstac.extensions.filter import FiltersClient
 
 settings = Settings()
 
@@ -35,10 +40,10 @@ extensions = [
     FilterExtension(client=FiltersClient()),
     ContextExtension(),
     TokenPaginationExtension(),
+    PaginationExtension()
 ]
 
 post_request_model = create_post_request_model(extensions, base_model=PgstacSearch)
-# post_request_model = PgstacSearch
 
 api = StacApi(
     settings=settings,

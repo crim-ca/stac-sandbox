@@ -8,6 +8,7 @@ __copyright__ = 'Copyright 2022 Computer Research Institute of Montréal'
 __license__ = 'BSD - see LICENSE file in top-level package directory'
 __contact__ = 'mathieu.provencher@crim.ca'
 
+from stac_fastapi.extensions.core.fields.request import PostFieldsExtension
 from stac_fastapi.types.core import AsyncBaseFiltersClient
 from utils import dict_merge
 
@@ -17,6 +18,16 @@ import attr
 
 from typing import Dict, Any, Optional
 
+from stac_fastapi.pgstac.types.search import PgstacSearch
+
+
+class PgstacSearchFieldsExtension(PgstacSearch):
+    """
+    Search model compatible with PostFieldsExtension.
+    """
+
+    conf: Optional[Dict] = {}
+    fields: PostFieldsExtension = PostFieldsExtension()
 
 @attr.s
 class FiltersClient(AsyncBaseFiltersClient):
@@ -30,7 +41,7 @@ class FiltersClient(AsyncBaseFiltersClient):
 
     async def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
         properties = {}
-        core_crud_client = CoreCrudClient()
+        core_crud_client = CoreCrudClient(post_request_model=PgstacSearchFieldsExtension)
         item_collection = await core_crud_client.item_collection(collection_id, **kwargs)
 
         for feat in item_collection["features"]:
@@ -57,14 +68,12 @@ class FiltersClient(AsyncBaseFiltersClient):
         schema = await super().get_queryables()
 
         if collection_id:
-
             properties = await self.collection_summaries(collection_id, **kwargs)
 
             schema['$id'] = f'{kwargs["request"].base_url}/{collection_id}/queryables'
             schema['title'] = f'Queryables for {collection_id}'
             schema['description'] = f'Queryable names and values for the {collection_id} collection'
             schema['properties'] = properties
-
         else:
             query_params = kwargs['request'].query_params
             collections = query_params.get('collections', [])
