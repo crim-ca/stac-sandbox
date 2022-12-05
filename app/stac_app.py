@@ -38,6 +38,7 @@ extensions = [
 ]
 
 post_request_model = create_post_request_model(extensions, base_model=PgstacSearch)
+# post_request_model = PgstacSearch
 
 api = StacApi(
     settings=settings,

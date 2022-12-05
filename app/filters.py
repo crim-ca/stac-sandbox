@@ -31,7 +31,7 @@ class FiltersClient(AsyncBaseFiltersClient):
     async def collection_summaries(self, collection_id: str, **kwargs) -> Dict:
         properties = {}
         core_crud_client = CoreCrudClient()
-        item_collection = await core_crud_client.item_collection(collection_id, 9999, **kwargs)
+        item_collection = await core_crud_client.item_collection(collection_id, **kwargs)
 
         for feat in item_collection["features"]:
             for property in feat["properties"]:
