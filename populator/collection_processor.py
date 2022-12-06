@@ -15,7 +15,7 @@ import requests
 import os
 import pystac
 import datetime
-from asset_scanner.core.utils import generate_id
+import hashlib
 import yaml
 import sys
 
@@ -54,7 +54,9 @@ class CollectionProcessor:
             self.process_collection(stac_host, col["name"], col["description"])
 
     def process_collection(self, stac_host, collection_name, collection_description):
-        collection_id = generate_id(collection_name)
+        collection_id = hashlib.md5(
+            collection_name.encode("utf-8")
+        ).hexdigest()
         stac_collection = self.get_stac_collection(stac_host, collection_id)
 
         if stac_collection:
