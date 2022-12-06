@@ -22,7 +22,7 @@ from stac_fastapi.pgstac.types.search import PgstacSearch
 from starlette.middleware.cors import CORSMiddleware
 
 # TODO : Ok for now to use custom `FiltersClient, but will eventually need to use the official
-#  `stac_fastapi.pgstac.extensions.filter` one
+#  `stac_fastapi.pgstac.extensions.filter`
 from filters import FiltersClient
 # from stac_fastapi.pgstac.extensions.filter import FiltersClient
 
