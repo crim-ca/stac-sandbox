@@ -8,16 +8,11 @@ __copyright__ = 'Copyright 2018 United Kingdom Research and Innovation'
 __license__ = 'BSD - see LICENSE file in top-level package directory'
 __contact__ = 'richard.d.smith@stfc.ac.uk'
 
+# Taken from https://github.com/cedadev/stac-generator/blob/master/stac_generator/core/utils.py
+
 
 # Python imports
 import collections
-from string import Template
-
-# Third-party imports
-from fastapi import HTTPException
-
-# Typing imports
-from typing import TYPE_CHECKING
 
 
 def dict_merge(*args, add_keys=True) -> dict:
