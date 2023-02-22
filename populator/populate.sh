@@ -10,15 +10,15 @@ eval "$(conda shell.bash hook)"
 conda activate ceda-workflow-3.9-1
 
 # create collections
-# python3 collection_processor.py collections.yaml
+python3 collection_processor.py collections.yaml
 
-cd ../../stac-generator-example
+cd ~/projects/stac-generator-example
 
 # add items
-python3 -m asset_scanner.scripts.asset_scanner conf/thredds-extract-cmip6-assets.yaml        # CMIP6
-# python3 -m asset_scanner.scripts.asset_scanner conf/thredds-extract-cmip5-assets.yaml          # CMIP5
+python3 -m stac_generator.scripts.stac_generator conf/thredds-cmip6-asset-generator.yaml        # CMIP6
+python3 -m stac_generator.scripts.stac_generator conf/thredds-cmip5-asset-generator.yaml        # CMIP5
 
-cd ../stac-sandbox/scripts
+cd ~/projects/stac-sandbox/populator
 
 # update collection summaries
 python3 collection_processor.py collections.yaml
